@@ -22,4 +22,5 @@ function len = length_A_to_B(A, B)
     diff_y = abs(A(1,2) - B(1,2));
     
     len = diff_x^2 + diff_y^2;
+    len = sqrt(len);
 end
