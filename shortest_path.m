@@ -14,6 +14,11 @@ for cycle=1:200
     fit = fitness(path)
 end
 
+function digit = get_random_digit(smax, smin)
+%returns random digit belonging to interval <0,9>
+    digit = round(rand() * (smax - smin + 1) + smin);
+end
+
 function fit = fitness(path)
     fit = 0;
     
