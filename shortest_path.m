@@ -7,6 +7,15 @@ points=[0,0; 18,77; 12,88; 30,37; 41,64; 10,19; 72,37; 87,17; 35,82;
 
 plot(points(:,1),points(:,2),'rx');
 
+ft = fitness(points)
+
+function fit = fitness(path)
+    fit = 0;
+    
+    for i=1:2:length(path)
+        fit = fit + length_A_to_B(path(i, :), path(i+1, :));
+    end
+end
 
 function len = length_A_to_B(A, B)
     diff_x = abs(A(1,1) - B(1,1));
