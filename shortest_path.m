@@ -1,18 +1,23 @@
 %uloha2
 %isid92654
 
-points=[0,0; 18,77; 12,88; 30,37; 41,64; 10,19; 72,37; 87,17; 35,82;
-18,15; 18,90; 23,57; 75,12; 97,27; 7,67; 20,82; 49,0; 62,14; 10,35;
-100,100];
+start = [0,0];
+stop = [100, 100];
+set = [18,77; 12,88; 30,37; 41,64; 10,19; 72,37; 87,17; 35,82;
+18,15; 18,90; 23,57; 75,12; 97,27; 7,67; 20,82; 49,0; 62,14; 10,35];
 
-plot(points(:,1),points(:,2),'rx');
+path = [start; set; stop];
 
-ft = fitness(points)
+plot(path(:,1),path(:,2),'rx');
+
+for cycle=1:200
+    fit = fitness(path)
+end
 
 function fit = fitness(path)
     fit = 0;
     
-    for i=1:2:length(path)
+    for i=1:(length(path)-1)
         fit = fit + length_A_to_B(path(i, :), path(i+1, :));
     end
 end
