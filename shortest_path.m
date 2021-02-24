@@ -13,27 +13,46 @@ grid;
 
 pop_size = 100;
 population = [];
+vec_of_best_ones = [15, 10 ,5];
 
 for cycle=1:200
     
-    %fill in population
-    for i=1:pop_size
-        population(i, :, :) = path;
-        set = shake(set, 1);
-        set = swapgen(set, 0.5);
-        path = [start; set; stop];
-    end
+    %fill in population with shaken and swapped individuals
+    %for i=1:pop_size
+        %population(i, :, :) = path;
+       % path = cross_mut(start, set, stop);
+   %end
     
+    population = get_population(pop_size, start, set, stop);
+   
     for i=1:pop_size
         fit(i)=fitness(population(i, :, :));
     end
     
     best_individuals(cycle) = min(fit);
+    
+    
 end
 
 figure(2)
 plot(best_individuals);
 grid;
+
+function population = get_population(pop_size, start, set, stop)
+    path = cross_mut(start, set, stop);
+    
+    for i=1:pop_size
+        population(i,:,:) = path;
+        path = cross_mut(start, set, stop);
+    end
+end
+
+function crossmut_path = cross_mut(start, set, stop)
+    set = shake(set, 1);
+    set = swapgen(set, 0.5);
+    
+    crossmut_path = [start; set; stop];
+end
 
 function fit = fitness(path)
     fit = 0;
