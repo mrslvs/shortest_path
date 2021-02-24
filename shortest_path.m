@@ -31,14 +31,19 @@ for cycle=1:200
     diff = pop_size - sum(vec_of_best_ones);
     temp_pop = selrand(population, fit, diff);
     
+    population = [];
     %population = [new_pop; temp_pop];
     for i=1:pop_size
         for j=1:sum(vec_of_best_ones)
-            population(i) = new_pop(j);
+            for k=1:2
+                population(i,j,k) = new_pop(j,k);
+            end
         end
         
         for j=1:diff
-            population(i) = temp_pop(j);
+            for k=1:2
+                population(i,j,k) = temp_pop(j,k);
+            end
         end
     end
     
@@ -59,7 +64,8 @@ end
 
 function crossmut_path = cross_mut(start, set, stop)
     set = shake(set, 1);
-    set = swapgen(set, 0.5);
+    set = swapgen(set, 1);
+    set = swappart(set, 1);
     
     crossmut_path = [start; set; stop];
 end
