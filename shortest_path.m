@@ -33,6 +33,11 @@ for cycle=1:200
     
     population = [];
     %population = [new_pop; temp_pop];
+    p1 = fix_matrix(new_pop, 30);
+    p2 = fix_matrix(temp_pop, 70);
+    %population = cat(1, p1, p2);
+    population = [p1;p2];
+    
     for i=1:pop_size
         for j=1:sum(vec_of_best_ones)
             for k=1:2
@@ -53,6 +58,19 @@ figure(2)
 plot(best_individuals);
 grid;
 
+function p = fix_matrix(m, size)
+    for i=1:size
+        p(i,:,:) = get_points_from_row(m(i,:));
+    end
+end
+
+function points = get_points_from_row(m)
+    for i=1:20
+        points(i,1) = m(i*2-1);
+        points(i,2) = m(i*2);
+    end
+end
+
 function population = get_population(pop_size, start, set, stop)
     path = cross_mut(start, set, stop);
     
@@ -64,8 +82,8 @@ end
 
 function crossmut_path = cross_mut(start, set, stop)
     set = shake(set, 1);
-    set = swapgen(set, 1);
-    set = swappart(set, 1);
+    set = swapgen(set, 0.02);
+    set = swappart(set, 0.05);
     
     crossmut_path = [start; set; stop];
 end
