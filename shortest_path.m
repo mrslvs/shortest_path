@@ -15,22 +15,32 @@ pop_size = 100;
 population = [];
 vec_of_best_ones = [15, 10 ,5];
 
+population = get_population(pop_size, start, set, stop);
+
 for cycle=1:200
-    
-    %fill in population with shaken and swapped individuals
-    %for i=1:pop_size
-        %population(i, :, :) = path;
-       % path = cross_mut(start, set, stop);
-   %end
-    
-    population = get_population(pop_size, start, set, stop);
-   
+        
     for i=1:pop_size
         fit(i)=fitness(population(i, :, :));
     end
     
     best_individuals(cycle) = min(fit);
     
+    %selection
+    new_pop = selbest(population, fit, vec_of_best_ones);
+    population = get_population(pop_size, start, set, stop);
+    diff = pop_size - sum(vec_of_best_ones);
+    temp_pop = selrand(population, fit, diff);
+    
+    %population = [new_pop; temp_pop];
+    for i=1:pop_size
+        for j=1:sum(vec_of_best_ones)
+            population(i) = new_pop(j);
+        end
+        
+        for j=1:diff
+            population(i) = temp_pop(j);
+        end
+    end
     
 end
 
