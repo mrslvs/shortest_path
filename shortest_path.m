@@ -5,7 +5,7 @@ set = [18,77; 12,88; 30,37; 41,64; 10,19; 72,37; 87,17; 35,82;
 
 pop_size = 100;
 population = [];
-vec_of_best_ones = [15, 10 ,5];
+vec_of_best_ones = [8, 5 ,3];
 cycles = 900;
 
 for i=1:pop_size
