@@ -10,9 +10,17 @@ grid;
 pop_size = 100;
 population = [];
 vec_of_best_ones = [15, 10 ,5];
+cycles = 900;
 
 for i=1:pop_size
     population = [population;1:18];
+    population = swapgen(population, 0.3);
+end
+
+for i=1:cycles
+    fit = fitness(population, pop_size, set);
+    best_individuals(i) = min(fit);
+    
 end
 
 fit = fitness(population, pop_size, set);
@@ -20,19 +28,11 @@ fit = fitness(population, pop_size, set);
 
 function fit = fitness(population, pop_size, set)
     for i=1:pop_size
-        
         for j=1:18
             for k=1:2
                 path(j,k) = set(population(i,j), k); %this does magic
             end
         end
-        
-        %set(i)
-        %set(i,:)
-        %set(i+1,:)
-        
-        %population(i, :)
-        %population(i+1, :)
         
         fit(i) = length_of_path(path);
     end
