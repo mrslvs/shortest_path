@@ -21,6 +21,12 @@ for i=1:cycles
     fit = fitness(population, pop_size, set);
     best_individuals(i) = min(fit);
     
+    %store best ones
+    
+    %mutate and cross
+    population = swapgen(population, 0.3);
+    
+    %concatonate
 end
 
 fit = fitness(population, pop_size, set);
