@@ -22,7 +22,9 @@ function fit = fitness(population, pop_size, set)
     for i=1:pop_size
         
         for j=1:18
-            path(j,:) = set(population(i), :);
+            for k=1:2
+                path(j,k) = set(population(i,j), k); %this does magic
+            end
         end
         
         %set(i)
