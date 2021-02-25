@@ -12,7 +12,7 @@ population = [];
 vec_of_best_ones = [15, 10 ,5];
 
 for i=1:pop_size
-    population = [population;1:18];
+    population = [population;2:19];
 end
 
 fit = fitness(population, pop_size, set);
@@ -20,18 +20,9 @@ fit = fitness(population, pop_size, set);
 
 function fit = fitness(population, pop_size, set)
     for i=1:pop_size
-        
         for j=1:18
-            path(j,:) = set(population(i), :);
+            path(j, :) = set(population(i), :);
         end
-        
-        %set(i)
-        %set(i,:)
-        %set(i+1,:)
-        
-        %population(i, :)
-        %population(i+1, :)
-        
         fit(i) = length_of_path(path);
     end
 end
