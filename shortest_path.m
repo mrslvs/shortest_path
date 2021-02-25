@@ -32,7 +32,7 @@ for i=1:cycles
     population = swappart(population, 0.08);
     diff = pop_size - sum(vec_of_best_ones);
     temp_rand = selrand(population, fit, diff);
-    
+    population = shake(population, 0.05);
     %concatonate
     population = [temp_best; temp_rand];
 end
