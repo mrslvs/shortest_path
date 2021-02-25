@@ -3,10 +3,6 @@
 set = [18,77; 12,88; 30,37; 41,64; 10,19; 72,37; 87,17; 35,82;
 18,15; 18,90; 23,57; 75,12; 97,27; 7,67; 20,82; 49,0; 62,14; 10,35];
 
-figure(1)
-plot(set(:,1),set(:,2),'o-');
-grid;
-
 pop_size = 100;
 population = [];
 vec_of_best_ones = [15, 10 ,5];
@@ -20,6 +16,14 @@ end
 for i=1:cycles
     fit = fitness(population, pop_size, set);
     best_individuals(i) = min(fit);
+    best_one = selbest(population, fit, 1);
+    
+    path = get_path(best_one, set);
+    
+    %graph1
+    figure(1)
+    plot(path(:,1),path(:,2),'o-');
+    grid;
     
     %store best ones
     temp_best= selbest(population, fit, vec_of_best_ones);
@@ -35,6 +39,18 @@ end
 
 fit = fitness(population, pop_size, set);
 
+function p = get_path(order, set)
+    for j=1:18
+        for k=1:2
+            p(j,k) = set(order(1,j), k); %this does magic
+        end
+    end
+    
+    start = [0,0];
+    stop = [100,100];
+    p = [start; p; stop];
+    
+end
 
 function fit = fitness(population, pop_size, set)
     for i=1:pop_size
