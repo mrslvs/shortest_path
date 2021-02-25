@@ -39,6 +39,10 @@ end
 
 fit = fitness(population, pop_size, set);
 
+figure(2)
+plot(best_individuals);
+grid;
+
 function p = get_path(order, set)
     for j=1:18
         for k=1:2
