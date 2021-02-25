@@ -28,7 +28,7 @@ for i=1:cycles
     %store best ones
     temp_best= selbest(population, fit, vec_of_best_ones);
     %mutate and cross
-    population = swapgen(population, 0.03);
+    population = swapgen(population, 0.3);
     population = swappart(population, 0.08);
     diff = pop_size - sum(vec_of_best_ones);
     temp_rand = selrand(population, fit, diff);
