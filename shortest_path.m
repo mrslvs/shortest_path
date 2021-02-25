@@ -3,9 +3,9 @@
 set = [18,77; 12,88; 30,37; 41,64; 10,19; 72,37; 87,17; 35,82;
 18,15; 18,90; 23,57; 75,12; 97,27; 7,67; 20,82; 49,0; 62,14; 10,35];
 
-pop_size = 100;
+pop_size = 50;
 population = [];
-vec_of_best_ones = [5, 4 ,3];
+vec_of_best_ones = [3, 2 ,1];
 cycles = 900;
 
 for i=1:pop_size
@@ -26,18 +26,20 @@ for i=1:cycles
     grid;
     
     %store best ones
-    %temp_best= selbest(population, fit, vec_of_best_ones);
+    temp_best= selbest(population, fit, vec_of_best_ones);
     %temp_best = seltourn(population, fit, sum(vec_of_best_ones));
-    temp_best = selsus(population, fit, sum(vec_of_best_ones));
+    %temp_best = selsus(population, fit, sum(vec_of_best_ones));
     %mutate and cross
-    population = swapgen(population, 0.3);
     population = swappart(population, 0.8);
+    population = swapgen(population, 0.1);
+    
     diff = pop_size - sum(vec_of_best_ones);
     %selectioon
     temp_rand = selrand(population, fit, diff);
     population = shake(population, 0.05);
     %concatonate
     population = [temp_best; temp_rand];
+    
 end
 
 fit = fitness(population, pop_size, set);
