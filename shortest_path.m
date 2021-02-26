@@ -27,18 +27,14 @@ for i=1:cycles
     
     %store best ones
     temp_best= selbest(population, fit, vec_of_best_ones);
-    %temp_best = seltourn(population, fit, sum(vec_of_best_ones));
-    %temp_best = selsus(population, fit, sum(vec_of_best_ones));
-    %mutate and cross
-    population = swappart(population, 0.8);
-    population = swapgen(population, 0.1);
+    old = seltourn(population, fit, 6);
+    work = seltourn(population, fit, 50-12);
+    work = swapgen(work, 0.1);
+    work = swappart(work, 0.1);
+    work = crosord(work,0);
     
-    diff = pop_size - sum(vec_of_best_ones);
-    %selectioon
-    temp_rand = selrand(population, fit, diff);
-    population = shake(population, 0.05);
     %concatonate
-    population = [temp_best; temp_rand];
+    population = [temp_best; old ; work];
     
 end
 
