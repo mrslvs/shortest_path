@@ -1,7 +1,15 @@
 %task2
 %isid92###
+global start;
+start = [0,0];
+
+global set;
 set = [18,77; 12,88; 30,37; 41,64; 10,19; 72,37; 87,17; 35,82;
 18,15; 18,90; 23,57; 75,12; 97,27; 7,67; 20,82; 49,0; 62,14; 10,35];
+
+global stop;
+stop = [100, 100];
+
 
 pop_size = 50;
 population = [];
@@ -20,7 +28,8 @@ for i=1:cycles
     best_individuals(i) = min(fit);
     best_one = selbest(population, fit, 1);
     
-    path = get_path_for_graph(best_one, set);
+    p = get_path(best_one, set);
+    path = [start; p; stop];
     
     %show path of the best individual in current cycle
     figure(1)
@@ -51,35 +60,19 @@ function path = get_path(order, set)
     for j=1:18
         %J: for each index of set
         for k=1:2
-            %K: for each value on axis (X and Y) of set
-            %store to PATH
+            %K: for each axis value (X and Y) of set(index)
+            %value of X = set(index,1)
+            %value of Y = set(index,2)
+            %store X,Y to PATH
             path(j,k) = set(order(1,j), k);
         end
     end
 end
 
-function p = get_path_for_graph(order, set)
-    p = get_path(order,set);
-    
-    start = [0,0];
-    stop = [100,100];
-    p = [start; p; stop];
-    
-end
-
 function fit = fitness(population, pop_size, set)
     for i=1:pop_size
         %I: for each individual in population
-        for j=1:18
-            %J: for each index of set (individual = indexes of set)
-            for k=1:2
-                %K: for each value on axis (X and Y) of set
-                %value of X = set(index,1)
-                %value of Y = set(index,2)
-                %store to PATH X,Y
-                path(j,k) = set(population(i,j), k);
-            end
-        end
+        path = get_path(population(i, :), set)
         
         %fitness of individual is the length of its path
         fit(i) = length_of_path(path);
@@ -88,8 +81,10 @@ end
 
 function len = length_of_path(individ)
 %argument are indexes of initial set
-    start = [0,0];
-    stop = [100,100];
+    %start = [0,0];
+    %stop = [100,100];
+    global start;
+    global stop;
     path = [start;individ;stop];
     len = 0;
     
