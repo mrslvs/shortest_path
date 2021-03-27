@@ -20,7 +20,7 @@ for i=1:cycles
     best_individuals(i) = min(fit);
     best_one = selbest(population, fit, 1);
     
-    path = get_path(best_one, set);
+    path = get_path_for_graph(best_one, set);
     
     %show path of the best individual in current cycle
     figure(1)
@@ -47,12 +47,19 @@ figure(2)
 plot(best_individuals);
 grid;
 
-function p = get_path(order, set)
+function path = get_path(order, set)
     for j=1:18
+        %J: for each index of set
         for k=1:2
-            p(j,k) = set(order(1,j), k); %this does magic
+            %K: for each value on axis (X and Y) of set
+            %store to PATH
+            path(j,k) = set(order(1,j), k);
         end
     end
+end
+
+function p = get_path_for_graph(order, set)
+    p = get_path(order,set);
     
     start = [0,0];
     stop = [100,100];
@@ -64,12 +71,17 @@ function fit = fitness(population, pop_size, set)
     for i=1:pop_size
         %I: for each individual in population
         for j=1:18
-            %for
+            %J: for each index of set (individual = indexes of set)
             for k=1:2
+                %K: for each value on axis (X and Y) of set
+                %value of X = set(index,1)
+                %value of Y = set(index,2)
+                %store to PATH X,Y
                 path(j,k) = set(population(i,j), k);
             end
         end
         
+        %fitness of individual is the length of its path
         fit(i) = length_of_path(path);
     end
 end
