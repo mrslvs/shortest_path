@@ -10,10 +10,10 @@ cycles = 900;
 
 for i=1:pop_size
     %fill the population with numbers(1 to 18)
-    %each number represents position f  rom the initial set
+    %each number represents index in the initial set
     population = [population;1:18];
 end
-population = swapgen(population, 0.3);
+population = swapgen(population, 0.3); %swap for diversity
 
 for i=1:cycles
     fit = fitness(population, pop_size, set);
@@ -62,7 +62,9 @@ end
 
 function fit = fitness(population, pop_size, set)
     for i=1:pop_size
+        %I: for each individual in population
         for j=1:18
+            %for
             for k=1:2
                 path(j,k) = set(population(i,j), k);
             end
@@ -73,19 +75,21 @@ function fit = fitness(population, pop_size, set)
 end
 
 function len = length_of_path(individ)
+%argument are indexes of initial set
     start = [0,0];
     stop = [100,100];
     path = [start;individ;stop];
     len = 0;
     
     for i=1:19
+        %calculate length of path between each points, add to len
         len = len + length_A_to_B(path(i, :), path(i+1, :));
     end
 end
 
 function len = length_A_to_B(A, B)
-%parameters a=[xa,yb]
-%returns length
+%argument A=[Xa,Yb]
+%returns distance between A&B
     diff_x = abs(A(1,1) - B(1,1));
     diff_y = abs(A(1,2) - B(1,2));
     
