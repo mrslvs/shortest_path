@@ -1,5 +1,5 @@
-%uloha2
-%isid92654
+%task2
+%isid92###
 set = [18,77; 12,88; 30,37; 41,64; 10,19; 72,37; 87,17; 35,82;
 18,15; 18,90; 23,57; 75,12; 97,27; 7,67; 20,82; 49,0; 62,14; 10,35];
 
@@ -9,9 +9,11 @@ vec_of_best_ones = [3, 2 ,1];
 cycles = 900;
 
 for i=1:pop_size
+    %fill the population with numbers(1 to 18)
+    %each number represents position f  rom the initial set
     population = [population;1:18];
-    population = swapgen(population, 0.3);
 end
+population = swapgen(population, 0.3);
 
 for i=1:cycles
     fit = fitness(population, pop_size, set);
@@ -20,13 +22,14 @@ for i=1:cycles
     
     path = get_path(best_one, set);
     
-    %graph1
+    %show path of the best individual in current cycle
     figure(1)
     plot(path(:,1),path(:,2),'o-');
     grid;
     
     %store best ones
     temp_best= selbest(population, fit, vec_of_best_ones);
+    %
     old = seltourn(population, fit, 6);
     work = seltourn(population, fit, 50-12);
     work = swapgen(work, 0.1);
@@ -61,7 +64,7 @@ function fit = fitness(population, pop_size, set)
     for i=1:pop_size
         for j=1:18
             for k=1:2
-                path(j,k) = set(population(i,j), k); %this does magic
+                path(j,k) = set(population(i,j), k);
             end
         end
         
